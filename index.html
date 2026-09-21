@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flores Amarillas 🌻</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0b0d17;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    h1 {
+      margin-top: 20px;
+      font-size: 1.8rem;
+      color: #ffd700;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      text-align: center;
+    }
+    canvas {
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>¡Para la chica más especial! 🌻✨</h1>
+  <canvas id="flowerCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('flowerCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = Math.min(window.innerWidth - 20, 400);
+    canvas.height = 500;
+
+    function drawFlower(x, y, petalCount, radius, delay) {
+      setTimeout(() => {
+        // Tallo
+        ctx.beginPath();
+        ctx.moveTo(x, y + 180);
+        ctx.lineTo(x, y);
+        ctx.strokeStyle = '#2e8b57';
+        ctx.lineWidth = 6;
+        ctx.stroke();
+
+        // Hojas
+        ctx.fillStyle = '#228b22';
+        ctx.beginPath();
+        ctx.ellipse(x - 20, y + 100, 25, 10, -Math.PI / 4, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.ellipse(x + 20, y + 120, 25, 10, Math.PI / 4, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Pétalos
+        for (let i = 0; i < petalCount; i++) {
+          let angle = i * (2 * Math.PI / petalCount);
+          let px = x + Math.cos(angle) * radius;
+          let py = y + Math.sin(angle) * radius;
+
+          ctx.beginPath();
+          ctx.arc(px, py, 16, 0, 2 * Math.PI);
+          ctx.fillStyle = '#ffd700';
+          ctx.fill();
+          ctx.strokeStyle = '#e6b800';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+
+        // Centro
+        ctx.beginPath();
+        ctx.arc(x, y, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = '#8b4513';
+        ctx.fill();
+      }, delay);
+    }
+
+    // Animación secuencial de las flores
+    drawFlower(canvas.width / 2 - 70, 220, 10, 30, 500);
+    drawFlower(canvas.width / 2 + 70, 220, 10, 30, 1200);
+    drawFlower(canvas.width / 2, 140, 12, 35, 1900);
+  </script>
+</body>
+</html>
